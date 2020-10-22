@@ -1,0 +1,61 @@
+easy_admin:
+    entities:
+        CollectionPoint:
+            role: ROLE_USER
+            class: MADSPosconsumosBundle\Entity\CollectionPoint
+            # disabled_actions: ['edit']
+            list:
+                title: 'menu.collection_points'
+                actions:
+                  - { name: 'show', icon: 'eye' }
+                  - { name: 'edit', icon: 'pencil' }
+                  - { name: 'delete', icon: 'trash' }
+                  - { name: 'new', icon: 'plus-circle' }
+                fields:
+                  - 'name'  
+                  - 'enabled'
+                  - 'addressLine1'
+                  - 'waste'
+                  - 'campaigns'
+                  - 'createdAt'
+            form:
+              fields:
+                - { type: 'group', css_class: 'col-md-8', label: 'Collection Point Information' }
+                - { property: 'name', css_class: 'large' }
+                - { property: 'description', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType', css_class: 'large' }
+                - { property: 'waste', type: 'MADSPosconsumosBundle\Form\Type\WasteType', type_options: { 'required': true, 'class': 'MADSPosconsumosBundle\Entity\Waste', 'multiple' : true, 'attr' : { 'data-widget' : 'select2' } }, help: 'Seleccione los residuos asociados a este punto de recolección.' }
+                - { property: 'users', type: 'MADSPosconsumosBundle\Form\Type\UserType', type_options: { 'required': true, 'by_program': true, 'class': 'MADSPosconsumosBundle\Entity\User', 'multiple': true, 'attr' : { 'data-widget' : 'select2' } }, help: 'Contactos del programa responsable de este Punto de Recolección.' }
+                - { property: 'addressLine1'}
+                - { property: 'addressLine2', label: 'Address detail', help: 'Ejemplo: Centro Comercial Imperial, Local 1001 o si la dirección autocompletada en <strong>Dirección 1</strong> NO corresponde a la nomenclatura exacta.', type_options: {'required': false} }
+                - { property: 'point', help: 'Verifique la dirección en el mapa <span class="label label-info">También puedes arrastrar el marcador</span>.', type: 'MADSPosconsumosBundle\Form\Type\PointType' }
+                - { property: 'streetNumber', type: 'hidden' }
+                - { property: 'route', type: 'hidden' }
+                - { property: 'locality', type: 'hidden' }
+                - { property: 'subLocality', type: 'hidden' }
+                - { property: 'administrativeLevel1', type: 'hidden' }
+                - { property: 'administrativeLevel2', type: 'hidden' }
+                - { property: 'administrativeLevel3', type: 'hidden' }
+                - { property: 'country', type: 'hidden' }
+                - { type: 'group', css_class: 'col-md-4', label: 'Collection Point Type' }
+                - { property: 'collectionPointType', type: 'MADSPosconsumosBundle\Form\Type\CollectionPointTypeType', type_options: { 'required': true}}
+                - { type: 'group', css_class: 'col-md-4', label: 'Route Point Datetime', help: 'Si el tipo de punto seleccionado es un <span class="label label-info">Punto de Ruta</span>, debe seleccionar una fecha y hora de recogida en el punto de ruta. Si no, marque la casilla: <strong>Dejar vacío.</strong>' }
+                - { property: 'datetime', type_options: {'required': true} }
+                - { type: 'group', css_class: 'col-md-4', label: 'Collection Point Schedules', help: 'Si el tipo de punto seleccionado es un <span class="label label-info">Punto de Recolección</span>, debe agregar uno o varios horarios de disponibilidad en el punto de recolección. Si no, <strong>Dejar vacío.</strong>' }
+                - { property: 'schedules', type: 'collection', type_options: {entry_type: 'MADSPosconsumosBundle\Form\Type\CollectionScheduleType', 'delete_empty': true, 'allow_add': true, 'allow_delete': true} }
+                # - { type: 'group', css_class: 'col-md-4', label: 'Campaign Information' }
+                # - { property: 'campaigns', css_class: 'large', help: 'If You have created a campaign with previously' }
+            show:
+              fields:
+                - id
+                - name
+                - { property: 'description', type: 'raw' }                
+                - enabled
+                - users
+                - schedules
+                - datetime
+                - campaigns
+                - addressLine1
+                - addressLine2
+                - { property: 'point', template: 'point.html.twig' }
+                - waste                
+                - createdAt

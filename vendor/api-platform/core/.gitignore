@@ -1,0 +1,7 @@
+.php_cs.cache
+composer.phar
+composer.lock
+phpunit.xml
+/vendor/
+/tests/Fixtures/app/cache/*
+/tests/Fixtures/app/logs/*

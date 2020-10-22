@@ -1,0 +1,40 @@
+easy_admin:
+    entities:
+        Waste:
+            role: ROLE_USER
+            class: MADSPosconsumosBundle\Entity\Waste
+            list:
+                title: 'menu.waste'
+                actions:
+                  - { name: 'show', icon: 'eye' }
+                  - { name: 'edit', icon: 'pencil' }
+                  - { name: 'delete', icon: 'trash' }
+                  - { name: 'new', icon: 'plus-circle' }
+                fields:                  
+                  - 'name'                  
+                  - { property: 'wasteTypes', type: 'array' }
+                  - 'program'
+                  - 'enabled'
+                  - { property: 'image', type: 'image', base_path: %app.path.waste_images% }
+                  - 'createdAt'
+            form:
+              fields:
+                - { type: 'group', css_class: 'col-md-8', label: 'Waste Information' }
+                # - { property: 'name', css_class: 'large', type_options: { attr: {readonly: true}} }
+                - { property: 'name', css_class: 'large' }
+                - { property: 'description', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+                - { property: 'imageFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType', type_options: { required: true }, help: 'Seleccione una imagen JPEG, horizontal (landscape) con relación 4:3, ancho mínimo: 640px y alto mínimo: 480px.' }
+                - { type: 'group', css_class: 'col-md-4', label: 'Waste Type Information' }
+                - { property: 'wasteTypeParent', type: 'MADSPosconsumosBundle\Form\Type\WasteTypeParentType', type_options: {'required': true, 'class' : 'MADSPosconsumosBundle\Entity\WasteType'}, label: 'Waste Type' }
+                - { type: 'group', css_class: 'col-md-4', label: 'Program Information' }
+                - { property: 'program', type: 'MADSPosconsumosBundle\Form\Type\ProgramType', type_options: { 'required': true, 'class': 'MADSPosconsumosBundle\Entity\Program', 'attr' : { 'data-widget' : 'select2' } } }
+            show:
+              fields:
+                - 'id'
+                - 'name'
+                - { property: 'image', type: 'image', base_path: %app.path.waste_images% }
+                - { property: 'description', type: 'raw' }
+                - { property: 'wasteTypeParent', label: 'Tipo de residuo'}
+                - { property: 'wasteTypes', label: 'Subtipo de residuo' }
+                - 'enabled'
+                - 'createdAt'

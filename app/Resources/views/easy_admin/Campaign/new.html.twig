@@ -1,0 +1,72 @@
+{% form_theme form with easyadmin_config('design.form_theme') %}
+
+{% set _entity_config = easyadmin_entity(app.request.query.get('entity')) %}
+{% set _trans_parameters = { '%entity_name%': _entity_config.name|trans, '%entity_label%': _entity_config.label|trans } %}
+
+{% extends _entity_config.templates.layout %}
+
+{% block body_id 'easyadmin-new-' ~ _entity_config.name %}
+{% block body_class 'new new-' ~ _entity_config.name|lower %}
+
+{% block content_title %}
+{% spaceless %}
+    {% set _default_title = 'new.page_title'|trans(_trans_parameters, 'EasyAdminBundle') %}
+    {{ _entity_config.new.title is defined ? _entity_config.new.title|trans(_trans_parameters) : _default_title }}
+{% endspaceless %}
+{% endblock %}
+
+{% block main %}
+    {% block entity_form %}
+        {{ form(form) }}
+    {% endblock entity_form %}
+{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="{{ asset("bundles/madsposconsumos/javascripts/jquery.ui.addresspicker.js") }}"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('.new-form').areYouSure({ 'message': '{{ 'form.are_you_sure'|trans({}, 'EasyAdminBundle')|e('js') }}' });
+
+            $('.form-actions').easyAdminSticky();
+
+            // Select2 widget is only enabled for the <select> elements which explicitly ask for it
+            $('#main').find('form select[data-widget="select2"]').select2({
+                theme: 'bootstrap'
+            });
+
+            var $campaignType = $('#campaign_campaignType');
+            $campaignType.change(function() {
+
+                var $form = $(this).closest('form');
+                var data = {};
+                data[$campaignType.attr('name')] = $campaignType.val();       
+                var $spinner = $('<i class="loadingIcon fa fa-cog fa-spin"></i>');  
+
+                $.ajax({
+                    url : $form.attr('action'),
+                    type: $form.attr('method'),
+                    data : data,
+                    beforeSend: function() {
+                        $('#campaign_collectionPoints').parent().addClass('loadingField');
+                        $('#campaign_collectionPoints').parent().before($spinner);
+                    },
+                    success: function(html) {
+                        $spinner.remove();
+
+                        var $fieldContent = $(html).find('#campaign_collectionPoints').parent().removeClass('has-error');
+                        $fieldContent.find('.error-block').hide();
+                        $('#campaign_collectionPoints').parent().replaceWith($fieldContent);
+
+                        $('#main').find('form select[data-widget="select2"]').select2({
+                            theme: 'bootstrap'
+                        });
+                    }
+                });
+
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% if view == 'show' %}
+<script type="text/javascript">
+  var LatLng = {lat: {{ value.latitude }}, lng: {{ value.longitude }}};
+  var map;
+  var marker;
+
+  function initMap() {
+  	map = new google.maps.Map(document.getElementById('map'), { zoom: 17, center: LatLng });
+	marker = new google.maps.Marker({ position: LatLng, map: map });
+  }  
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+<div id="map" style="position:relative;width:100%;height:460px;"></div> 
+{% endif %}

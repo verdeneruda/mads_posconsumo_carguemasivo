@@ -1,0 +1,16 @@
+easy_admin:
+    site_name: '<span>redpos</span>consumo'
+    design:
+        form_theme:   'vertical'
+        color_scheme: 'light'
+        assets:
+            css:
+                - '/bundles/madsposconsumos/stylesheets/posconsumos.css'
+                - 'https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css'
+        templates:
+          menu: 'custom/menu.html.twig'
+        brand_color: '#96CC76'
+    formats:
+      date:     'd/m/Y'
+      time:     'h:ia'
+      datetime: 'd M Y h:ia'

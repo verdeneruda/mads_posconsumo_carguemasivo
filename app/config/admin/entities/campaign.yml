@@ -1,0 +1,48 @@
+easy_admin:
+    entities:
+        Campaign:
+            role: ROLE_USER
+            class: MADSPosconsumosBundle\Entity\Campaign
+            list:
+                title: 'menu.campaigns'
+                actions: 
+                  - { name: 'show', icon: 'eye' }
+                  - { name: 'edit', icon: 'pencil' }
+                  - { name: 'delete', icon: 'trash' }
+                  - { name: 'new', icon: 'plus-circle' }
+                fields:
+                    - 'name'
+                    - 'enabled'                    
+                    - { property: 'image', type: 'image', base_path: %app.path.campaign_images% }
+                    - { property: 'campaignType', template: 'enum.html.twig' }
+                    - 'collectionPoints'
+                    - 'campaignStart'
+                    - 'campaignEnd'
+                    - 'publishAt'
+            form:
+              fields:
+                - { type: 'group', css_class: 'col-md-8', label: 'Campaign Information' }
+                - { property: 'name', css_class: 'large' }
+                - { property: 'description', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+                - { property: 'imageFile', type: 'Vich\UploaderBundle\Form\Type\VichImageType', type_options: { required: true }, help: 'Seleccione una imagen JPEG, vertical (portrait) con relación 9:16, ancho mínimo: 1242px y alto mínimo: 2208px.' }
+                - { property: 'users', type: 'MADSPosconsumosBundle\Form\Type\UserType', type_options: { 'required': true, 'by_program': false, 'class': 'MADSPosconsumosBundle\Entity\User', 'multiple': true, 'attr' : { 'data-widget' : 'select2' } }, help: 'Contactos de programas asociados a esta campaña.' }
+                - { type: 'group', css_class: 'col-md-4', label: 'Dates' }
+                - { property: 'campaignStart'}
+                - { property: 'campaignEnd'}
+                - { property: 'publishAt', help: 'Fecha en que su Campaña será visible en la aplicación.'}
+                - { type: 'group', css_class: 'col-md-4', label: 'Collection Points Information', help: 'Asocie esta campaña a uno o varios puntos de recolección creados con anterioridad.' }
+                - { property: 'campaignType', type: 'MADSPosconsumosBundle\Form\Type\CampaignTypeType', type_options: { 'required': true}}                
+            show:
+              fields:
+                - id
+                - name
+                - { property: 'description', type: 'raw' }
+                - { property: 'image', type: 'image', base_path: %app.path.campaign_images% }
+                - campaignStart
+                - campaignEnd
+                - publishAt
+                - users
+                - { property: 'campaignType', template: 'enum.html.twig' }
+                - { property: 'collectionPoints', template: 'map.html.twig' }
+                - enabled
+                - createdAt

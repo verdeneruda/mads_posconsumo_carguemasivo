@@ -1,0 +1,49 @@
+{% if 'show' == view %}
+    {% if value|length > 0 %}
+
+    	<script type="text/javascript">
+		  var map;
+		  var bounds;
+		  function initMap() {
+		  	map = new google.maps.Map(document.getElementById('map'));
+		  	bounds = new google.maps.LatLngBounds();
+			{% for item in value %}
+			var contentString{{ loop.index }} = ''
+				{% if link_parameters is defined %}
+                {% set primary_key_value = attribute(item, link_parameters.primary_key_name) %}
+                + '<a href="{{ path('easyadmin', link_parameters|merge({ id: primary_key_value, referer: '' })) }}"><h3>{{ item.name }}</h3></a><ul>'
+                {% endif %}
+				{% for s in item.schedules %}
+				+ '<li>{{ s }}</li>'
+				{% endfor %}
+				+ '</ul></p><p><strong>{{ item.addressLine1 }}</strong></p><p>{{ item.addressLine2 }}</p><ul>'
+				{% for u in item.users %}
+				+ '<li><a href="{{ path('easyadmin', { entity: 'User', action: 'show', primary_key_name: 'id', id: u.id, referer: '' }) }}">{{ u }}</a></li>'
+                {% endfor %}
+				+ '</ul>'
+				{% if link_parameters is defined %}
+                {% set primary_key_value = attribute(item, link_parameters.primary_key_name) %}
+                + '<a href="{{ path('easyadmin', link_parameters|merge({ id: primary_key_value, referer: '' })) }}">Ver Detalle</a>'
+                {% endif %}
+                ;
+
+			var latLong{{ loop.index }} = { lat: {{ item.point.latitude }}, lng: {{ item.point.longitude }} };
+			var marker{{ loop.index }} = new google.maps.Marker({ position: latLong{{ loop.index }}, map: map });
+			var infowindow{{ loop.index }} = new google.maps.InfoWindow({
+				content: contentString{{ loop.index }}
+			});
+			marker{{ loop.index }}.addListener('click', function() { infowindow{{ loop.index }}.open(map, marker{{ loop.index }}); });
+			bounds.extend(latLong{{ loop.index }});
+			map.fitBounds(bounds);
+	        {% endfor %}
+		  }  
+		</script>
+		<script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+		<div id="map" style="position:relative;width:100%;height:460px;"></div> 
+
+    {% else %}
+        <div class="empty collection-empty">
+            <span class="label label-empty">{{ 'label.empty'|trans({}, 'EasyAdminBundle') }}</span>
+        </div>
+    {% endif %}
+{% endif %}

@@ -1,0 +1,228 @@
+@font-face {
+    font-family: 'Conv_UbuntuTitling-Bold';
+    src: url('fonts/UbuntuTitling-Bold.eot');
+    src: local('☺'), url('fonts/UbuntuTitling-Bold.woff') format('woff'), url('fonts/UbuntuTitling-Bold.ttf') format('truetype'), url('fonts/UbuntuTitling-Bold.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body#welcome {
+    background-image: url('images/background.jpg');
+    background-position: right bottom;
+    background-repeat: no-repeat;
+}
+
+body#welcome .wrapper {
+    background: none;
+}
+
+body#welcome .wrapper .content-wrapper {
+    min-height: 100vh !important;
+}
+
+body#welcome .wrapper .content-wrapper {
+    background-color: transparent;
+    background: none;
+}
+
+body#welcome #main .box {
+    margin-right: 0 auto;
+    max-width: 80%;
+    min-height: 40px;
+    padding: 1em;
+    width: 600px;
+}
+
+body#welcome #main .box--primary {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid #EEE;
+    box-shadow: 0 0 3px #CCC;
+    padding: 2em;
+}
+body#welcome #main .box--secondary {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+body#welcome #main .box h1 {
+    font-size: 21px;
+    font-weight: bold;
+    margin-left: auto;
+}
+
+body#welcome #main .box h1.logo {
+    font-family:'Conv_UbuntuTitling-Bold',Sans-Serif;    
+    font-size: 3em;
+    color: #EBC32E;
+    letter-spacing: -1px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    min-width: 245px;
+}
+
+body#welcome #main .box h1.logo span {
+    color: #D2D428;
+}
+
+body#welcome #main .box a {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+body#welcome #main .box code {
+    background: #F0F0F0;
+    color: inherit;
+}
+
+body#welcome .wrapper .footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 140px;
+    width: 100%;
+    background-image: url('images/back_logos.png');
+    background-repeat: repeat-x;
+    padding-right: 40px;
+}
+
+body#welcome .wrapper .footer .logo-minambiente {
+    background-image: url(images/logo_posconsumo.png);
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: right top;
+    height: 100px;
+    width: 257px;
+    margin: 20px;
+    float: right;
+    display: block;
+    position: relative;
+}
+
+body#welcome .wrapper .footer .logo-todosporunnuevopais {
+    background-image: url(images/LOGO_MINAMBIENTE_El_ambiente_es_de_todos.jpg);
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: right top;
+    height: 90px;
+    width: 500px;
+    margin: 25px 40px;
+    float: right;
+    display: block;
+    position: relative;
+}
+
+body.new .large input.form-control,
+body.edit .large input.form-control,
+body.show .large div.form-control {
+    font-size: 21px;
+    height: auto;
+    padding: 7px;
+}
+
+@media (min-width: 768px) {
+    body#welcome #main .box {
+        margin-top: 1em;
+    }
+    body#welcome #main .box h1 {
+        font-size: 24px;
+    }
+    body#welcome #main .box .login-help {
+        color: #777;
+        margin-top: 15px;
+    }
+    header.main-header
+    nav.navbar
+    #header-logo
+    a.logo {
+        font-size: 26px;
+    
+    }
+}
+
+.loadingIcon {
+    position: relative;
+    font-size: 16px;
+    z-index: 99;
+}
+
+.loadingField:after {
+    content: "";
+    position: absolute;
+    background-color: rgba(245,245,245,0.7);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.field-collection_schedule
+.field-choice
+> div {
+    display: flex;
+    display: -webkit-flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.field-collection_schedule
+.field-choice
+> div
+.checkbox {
+    width: 60px;
+}
+
+header.main-header
+nav.navbar
+#header-logo
+a.logo {
+    font-family:'Conv_UbuntuTitling-Bold',Sans-Serif;    
+    font-size: 2.2em;
+    color: #EBC32E;
+    letter-spacing: -1px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    min-width: 245px;
+}
+
+header.main-header
+nav.navbar
+#header-logo
+a.logo
+span {
+    color: #D2D428;
+    
+}
+
+/* nav bar*/
+header.main-header
+nav.navbar
+{
+    background-color: #67A0E9;
+    
+
+}
+/* Usuario */
+header.main-header
+nav.navbar ul.nav li{
+    color: white;
+}
+
+
+/* */
+aside.main-sidebar
+ {
+     background-color: #67A0E9;
+     
+
+ }
+/* subtitulos*/
+ aside.main-sidebar
+ .header.submenu-active
+ {
+     color: white;
+ }
+
+ .table.table
+ {
+     
+     background-color: blue;
+ }

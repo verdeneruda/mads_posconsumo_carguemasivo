@@ -1,0 +1,61 @@
+easy_admin:
+    design:
+        menu:
+            - label: 'menu.waste_types'
+              role: ROLE_ADMIN
+              icon: 'folder-open'
+              children:
+                  - { entity: 'WasteType', icon: 'th-list', label: 'menu.waste_type.list', params: { sortField: 'name', sortDirection: 'ASC' }}
+                  - { entity: 'WasteType', icon: 'plus-circle', label: 'menu.waste_type.add', params: { action: 'new' } }
+            - label: 'menu.waste'
+              role: ROLE_USER
+              icon: 'trash'
+              children:
+                  - { entity: 'Waste', icon: 'th-list', label: 'menu.waste.list', params: { sortField: 'name', sortDirection: 'ASC' }, default: true }
+                  - { entity: 'Waste', icon: 'plus-circle', label: 'menu.waste.add', params: { action: 'new' } }
+            - label: 'menu.collection_points'
+              role: ROLE_USER
+              icon: 'map-marker'
+              children:
+                  - { entity: 'CollectionPoint', icon: 'th-list', label: 'menu.collection_points.list', params: { sortField: 'createdAt' } }
+                  #- { icon: 'upload', label: 'menu.collection_points.import', route: 'mads_posconsumos_collection_point_import' }
+                  - { entity: 'CollectionPoint', icon: 'plus-circle', label: 'menu.collection_points.add', params: { action: 'new' } }
+                  - { entity: 'CollectionPoint', icon: 'plus-circle', label: 'menu.collection_massive.add', params: { action: 'massive' } }
+            - label: 'menu.campaigns'
+              role: ROLE_USER
+              icon: 'bullhorn'
+              children:
+                  - { entity: 'Campaign', icon: 'th-list', label: 'menu.campaign.list', params: { sortField: 'publishAt' } }
+                  - { entity: 'Campaign', icon: 'plus-circle', label: 'menu.campaign.add', params: { action: 'new' } }
+            - label: 'menu.programs'
+              role: ROLE_ADMIN
+              icon: 'industry'
+              children:
+                  - { entity: 'Program', icon: 'th-list', label: 'menu.program.list', params: { sortField: 'name', sortDirection: 'ASC' } }
+                  - { entity: 'Program', icon: 'plus-circle', label: 'menu.program.add', params: { action: 'new' } }
+            - label: 'menu.users'
+              role: ROLE_USER
+              icon: 'users'
+              children:
+                  - { entity: 'User', icon: 'th-list', label: 'menu.user.list', params: { sortField: 'program' } }
+                  - { entity: 'User', icon: 'plus-circle', label: 'menu.user.add', params: { action: 'new' } }            
+            - label: 'menu.email_template'
+              role: ROLE_ADMIN
+              icon: 'envelope'
+              children:
+                  - { entity: 'EmailTemplate', icon: 'th-list', label: 'menu.email_template.list', params: { sortField: 'createdAt' } }
+            - label: 'menu.reports'
+              role: ROLE_USER
+              icon: 'book'
+              children:
+                  - { entity: 'Report', icon: 'th-list', label: 'menu.reports.list', params: { sortField: 'name', sortDirection: 'ASC' }, default: true }
+                  - { entity: 'Report', icon: 'plus-circle', label: 'menu.reports.add', params: { action: 'new' } }
+
+            - { label: 'menu.about', role: ROLE_USER }              
+            - { label: 'menu.about.home', url: 'http://www.minambiente.gov.co/index.php/asuntos-ambientales-sectorial-y-urbana/programas-posconsumo-informacion-general#programa-posconsumo-de-residuos', icon: 'info-circle', target: '_blank', role: ROLE_USER }
+            - { label: 'menu.about.error', url: 'mailto:walmeciga@minambiente.gov.co', icon: 'exclamation-triangle', role: ROLE_USER }
+            - { label: 'menu.about.changelog', route: 'mads_posconsumos_changelog', icon: 'file-text-o', role: ROLE_USER }
+            - { label: 'menu.user', role: ROLE_USER } 
+            - { label: 'menu.user.profile', entity: 'User', params: { action: 'profile' }, icon: 'user', role: ROLE_USER } 
+            - { label: 'menu.user.password', entity: 'User', params: { action: 'resetpwd' }, icon: 'key', role: ROLE_USER } 
+            - { label: 'menu.user.logout', route: 'fos_user_security_logout', icon: 'sign-out', role: ROLE_USER }

@@ -1,0 +1,73 @@
+{% form_theme form with easyadmin_config('design.form_theme') %}
+
+{% set _entity_config = easyadmin_entity(app.request.query.get('entity')) %}
+{% set _trans_parameters = { '%entity_name%': _entity_config.name|trans, '%entity_label%': _entity_config.label|trans } %}
+
+{% extends _entity_config.templates.layout %}
+
+{% block body_id 'easyadmin-new-' ~ _entity_config.name %}
+{% block body_class 'new new-' ~ _entity_config.name|lower %}
+
+{% block content_title %}
+{% spaceless %}
+    {% set _default_title = 'new.page_title'|trans(_trans_parameters, 'EasyAdminBundle') %}
+    {{ _entity_config.new.title is defined ? _entity_config.new.title|trans(_trans_parameters) : _default_title }}
+{% endspaceless %}
+{% endblock %}
+
+{% block main %}
+    {% block entity_form %}
+        {{ form(form) }}
+    {% endblock entity_form %}
+{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+    <script src="{{ asset("bundles/madsposconsumos/javascripts/jquery.ui.addresspicker.js") }}"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('.new-form').areYouSure({ 'message': '{{ 'form.are_you_sure'|trans({}, 'EasyAdminBundle')|e('js') }}' });
+
+            $('.form-actions').easyAdminSticky();
+
+            // Select2 widget is only enabled for the <select> elements which explicitly ask for it
+            $('#main').find('form select[data-widget="select2"]').select2({
+                theme: 'bootstrap'
+            });
+
+            var addresspickerMap = $("#program_addressLine1").addresspicker({
+              componentsFilter: 'country:CO',
+              regionBias: "co",
+              language: "es",
+              updateCallback: false,
+              mapOptions: {
+                zoom: 4,
+                center: new google.maps.LatLng(4.570868, -74.29733299999998),
+                scrollwheel: false,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+              },
+              reverseGeocode: true,
+              elements: {
+                map:      "#map",
+                lat:      "#program_point_latitude",
+                lng:      "#program_point_longitude",
+                street_number: "#program_streetNumber",
+                route: "#program_route",
+                locality: "#program_locality",
+                sublocality: "#program_subLocality",
+                administrative_area_level_3: "#program_administrativeLevel3",
+                administrative_area_level_2: "#program_administrativeLevel2",
+                administrative_area_level_1: "#program_administrativeLevel1",
+                country:  "#program_country",
+                postal_code: false,
+                type:    false
+              }
+            });
+            var gmarker = addresspickerMap.addresspicker( "marker");
+            gmarker.setVisible(true);
+            addresspickerMap.addresspicker( "updatePosition");
+        });
+    </script>
+{% endblock %}

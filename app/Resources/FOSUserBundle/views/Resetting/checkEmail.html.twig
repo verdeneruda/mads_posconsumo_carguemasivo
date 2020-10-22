@@ -1,0 +1,51 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block head_stylesheets %}
+    {{ parent() }}
+    <style>
+        header.main-header,
+        aside.main-sidebar {
+            display: none;
+        }
+        .wrapper {
+            background: #F5F5F5;
+        }
+        .fixed .content-wrapper {
+            margin-left: 0;
+            padding-top: 0;
+        }
+    </style>
+{% endblock %}
+
+{% block page_title 'Red Posconsumo' %}
+{% block body_id 'welcome' %}
+
+{% block main %}
+
+    <div class="box box--secondary">
+        <h1 class="logo"><span>redpos</span>consumo</h1>
+        <p></p>
+    </div>
+
+    <div class="box box--primary">
+        <div class="row">
+            <h1 class="col-sm-12">
+                <i class="fa fa-lock"></i>
+                Restablecer contraseña
+            </h1>
+
+            <div class="col-sm-12">
+                
+                <p> {{ 'resetting.check_email'|trans({'%email%': email}) }} </p>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">        
+        <div class="logo-todosporunnuevopais"></div>
+        <div class="logo-minambiente"></div>
+    </div>
+{% endblock %}

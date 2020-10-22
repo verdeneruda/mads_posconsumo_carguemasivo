@@ -1,0 +1,24 @@
+{% extends '@EasyAdmin/default/layout.html.twig' %}
+
+{% set _default_title = 'changelog.page_title'|trans %}
+
+{% block page_title %}{{ _default_title|striptags }}{% endblock %}
+
+{% block content_header %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 class="title">{{ _default_title }}</h1>
+        </div>
+    </div>
+{% endblock content_header %}
+
+{% block main %}
+	
+{% set changelogDoc = include(docsDir ~ 'CHANGELOG.md') %}
+{{ changelogDoc|md2html }}
+
+{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+{% endblock %}

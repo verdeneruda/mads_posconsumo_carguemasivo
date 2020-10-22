@@ -1,0 +1,26 @@
+easy_admin:
+    entities:
+        WasteType:
+            role: ROLE_ADMIN
+            class: MADSPosconsumosBundle\Entity\WasteType
+            list:
+                title: 'menu.waste_types'
+                actions:
+                  - { name: 'show', icon: 'eye' }
+                  - { name: 'edit', icon: 'pencil' }
+                  - { name: 'delete', icon: 'trash' }
+                  - { name: 'new', icon: 'plus-circle' }
+                fields:
+                  - 'name'
+                  - { property: 'enabled', type: 'boolean' }
+                  - 'parent'
+                  - 'createdAt'
+            form:
+              fields:
+                - { type: 'group', css_class: 'col-md-8', label: 'Waste Type Information' }
+                - { property: 'name', css_class: 'large'}
+                - { property: 'description', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType' }
+                - { type: 'group', css_class: 'col-md-4', label: 'Waste Type Parent Information' }
+                - { property: 'parent', type: 'MADSPosconsumosBundle\Form\Type\EntityParentType', type_options: { class: 'MADSPosconsumosBundle\Entity\WasteType' }, label: 'Tipo Residuo' }                
+                - { type: 'group', css_class: 'col-md-4', label: 'System Information' }
+                - { property: 'classname', help: 'Dejar en blanco si no conoce el nombre de la clase para el icono del tipo de residuo.' }

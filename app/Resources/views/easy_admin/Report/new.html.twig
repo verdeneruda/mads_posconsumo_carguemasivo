@@ -1,0 +1,185 @@
+{% form_theme form with easyadmin_config('design.form_theme') %}
+
+{% set _entity_config = easyadmin_entity(app.request.query.get('entity')) %}
+{% set _trans_parameters = { '%entity_name%': _entity_config.name|trans, '%entity_label%': _entity_config.label|trans } %}
+
+{% extends _entity_config.templates.layout %}
+
+{% block body_id 'easyadmin-new-' ~ _entity_config.name %}
+{% block body_class 'new new-' ~ _entity_config.name|lower %}
+
+{% block content_title %}
+{% spaceless %}
+    {% set _default_title = 'new.page_title'|trans(_trans_parameters, 'EasyAdminBundle') %}
+    {{ _entity_config.new.title is defined ? _entity_config.new.title|trans(_trans_parameters) : _default_title }}
+{% endspaceless %}
+{% endblock %}
+
+{% block main %}
+    {% block entity_form %}
+        {{ form(form) }}
+    {% endblock entity_form %}
+{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(function() {
+            $('.new-form').areYouSure({ 'message': '{{ 'form.are_you_sure'|trans({}, 'EasyAdminBundle')|e('js') }}' });
+
+            $('.form-actions').easyAdminSticky();
+
+            // Select2 widget is only enabled for the <select> elements which explicitly ask for it
+            $('#main').find('form select[data-widget="select2"]').select2({ theme: 'bootstrap' });
+
+            var $entityType = $('#report_entityType');
+            $entityType.change(function() {
+
+                var $form = $(this).closest('form');
+                var data = {};
+                data[$entityType.attr('name')] = $entityType.val();       
+                var $spinner = $('<i class="loadingIcon fa fa-cog fa-spin"></i>');  
+
+                $.ajax({
+                    url : $form.attr('action'),
+                    type: $form.attr('method'),
+                    data : data,
+                    beforeSend: function() {
+                        $('#report_entityFieldNames').parent().addClass('loadingField');
+                        $('#report_entityFieldNames').parent().before($spinner);
+
+                        $('#report_entityFilters').addClass('loadingField');
+                        $('#report_entityFilters').before($spinner);
+                    },
+                    success: function(html) {
+                        $spinner.remove();
+
+                        var $fieldContent = $(html).find('#report_entityFieldNames').parent().removeClass('has-error');
+                        $fieldContent.find('.error-block').hide();
+                        $('#report_entityFieldNames').parent().replaceWith($fieldContent);
+
+                        $('#report_entityFilters').replaceWith($(html).find('#report_entityFilters'));
+                        $('#main').find('form select[data-widget="select2"]').select2({ theme: 'bootstrap' });
+                    }
+                });
+
+            });
+
+            $(document).on('easyadmin.collection.item-added', function(ev) {
+                
+                toggleSelects(ev);      
+
+                enableEntityFieldNameEvent(ev);
+                enableFilterTypeEvent(ev);          
+
+                $('#main').find('form select[data-widget="select2"]').select2({ theme: 'bootstrap' });
+            });
+
+            function toggleSelects(ev) {
+                if (ev.target.children.length > 1) {
+                    for (var i = 1; i < ev.target.children.length; i++) {
+                        var idx = ev.target.children[i-1].children.length === 3 ? 1 : 2;
+                        var fields = ev.target.children[i-1].children[idx].children;                        
+                        if (fields.length < 3) {
+                            $(ev.target.children[i]).find('.report_entity_field_names').attr('disabled', true);
+                        } else {
+                            $(ev.target.children[i]).find('.report_entity_field_names').attr('disabled', false);
+                        }
+                    }
+                }
+            }
+
+            function enableEntityFieldNameEvent(ev) {
+                var $entityFieldNames = $('.report_entity_field_names');
+                $entityFieldNames.change(function(event) {
+
+                    event.stopImmediatePropagation();
+
+                    var $this = $(this);
+                    var $form = $this.closest('form');
+
+                    var data = {};
+                    data[$entityType.attr('name')] = $entityType.val();
+                    data[$this.attr('name')] = $this.val();
+                    
+                    var $spinner = $('<i class="loadingIcon fa fa-cog fa-spin"></i>');  
+                    $.ajax({
+                        url : $form.attr('action'),
+                        type: $form.attr('method'),
+                        data : data,
+                        beforeSend: function() {
+                            $this.parent().parent().addClass('loadingField');
+                            $this.parent().parent().before($spinner);
+
+                            $this.parent().siblings().remove();
+                        },
+                        success: function(html) {
+                            $spinner.remove();
+                            $this.parent().parent().removeClass('loadingField');
+
+                            var formFields = $(html).find('#report_entityFilters')[0].firstElementChild.children[1];
+                            $(formFields.lastElementChild).find("#" + $this.attr('id')).remove();
+                            if (formFields.children.length > 1)
+                                $this.parent().parent().append(formFields.children[1]);
+
+                            if (ev)
+                                toggleSelects(ev);
+                            enableFilterTypeEvent(ev);
+                            $('#main').find('form select[data-widget="select2"]').select2({ theme: 'bootstrap' });
+                        }
+                    });
+
+
+                });
+            }
+
+            function enableFilterTypeEvent(ev) {
+                var $filterType = $('.report_filter_type');
+                $filterType.change(function() {
+
+                    event.stopImmediatePropagation();
+
+                    var $this = $(this);
+                    var $form = $this.closest('form');
+
+                    var data = {};
+                    data[$entityType.attr('name')] = $entityType.val();
+                    data[$this.attr('name')] = $this.val();
+
+                    var $spinner = $('<i class="loadingIcon fa fa-cog fa-spin"></i>');  
+                    $.ajax({
+                        url : $form.attr('action'),
+                        type: $form.attr('method'),
+                        data : data,
+                        beforeSend: function() {
+                            $this.parent().parent().addClass('loadingField');
+                            $this.parent().parent().before($spinner);
+                        },
+                        success: function(html) {
+                            $spinner.remove();
+                            $this.parent().parent().removeClass('loadingField');
+
+                            if ($this.parent().parent()[0].children.length > 2) {
+                                $this.parent().parent()[0].removeChild($this.parent().parent()[0].lastElementChild);
+                            }
+
+                            var formFields = $(html).find('#report_entityFilters')[0].firstElementChild.children[1];
+                            $(formFields.lastElementChild).find("#" + $this.attr('id')).remove();
+                            if (formFields.children.length > 1)
+                                $this.parent().parent().append(formFields.lastElementChild);
+
+                            if (ev)
+                                toggleSelects(ev);                                
+                        }
+                    });
+                    
+                });    
+            }
+
+            enableEntityFieldNameEvent();
+            enableFilterTypeEvent();
+
+            
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,17 @@
+parameters:
+    database_host: sql136.main-hosting.eu
+    database_name: u327950850_pos
+    database_user: u327950850_pos
+    database_password: Unoweb2
+    secret: 978e44bd297de6344af809890438ed2a98357686
+    cors_allow_origin: '*'
+    mailer_transport: smtp
+    mailer_port: 587
+    mailer_user: AKIA5P5FVJFMKMLCVEMS
+    mailer_password: BOrnfeLJ3clWRgwVqOtWWZLm0VTkmTQQwM4R1GYtUZRQ
+    mailer_host: email-smtp.us-east-1.amazonaws.com
+    mailer_encryption: tls
+
+    #mailer_password: Posweb2020
+    #mailer_user: posconsumo@unoweb.com.co
+    #mailer_host: ai000005.ferozo.com

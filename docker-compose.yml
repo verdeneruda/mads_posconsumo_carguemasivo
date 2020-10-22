@@ -1,0 +1,6 @@
+www:
+    image: recognizebv/symfony-docker:php7.1-dev
+    volumes:
+      - ".:/var/www/html"
+    ports:
+      - "80:80"

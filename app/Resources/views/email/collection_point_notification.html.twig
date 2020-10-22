@@ -1,0 +1,14 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{% block subject %}
+{% autoescape false %}
+{{ msgSubject|replace({'%fullname%': user.fullname}) }}
+{% endautoescape %}
+{% endblock %}
+
+{% block body_text %}{% endblock %}
+
+{% block body_html %}
+
+{{ htmlBody|replace({'%contactFullName%': contact.fullname, '%collectionPointName%': collectionPoint.name, '%collectionPointUrl%' : collectionPointRoute, '%userFullname%' : user.fullname, '%userEmail%' : user.email, '%userProgram%' : user.program.name  })|raw }}
+
+{% endblock %}

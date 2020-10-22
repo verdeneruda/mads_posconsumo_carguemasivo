@@ -1,0 +1,29 @@
+easy_admin:
+    entities:
+        EmailTemplate:
+            role: ROLE_ADMIN
+            class: MADSPosconsumosBundle\Entity\EmailTemplate
+            disabled_actions: ['new', 'delete']
+            list:
+                title: 'menu.email_template'
+                actions:
+                  - { name: 'show', icon: 'eye' }
+                  - { name: 'edit', icon: 'pencil' }
+                fields:
+                  - 'code'
+                  - 'subject'
+                  - 'createdAt'
+            form:
+              actions: ['-delete']
+              fields:
+                - { property: 'code', type_options: {'disabled': true}}
+                - { property: 'subject', css_class: 'large' }                
+                - { property: 'template', type: 'Ivory\CKEditorBundle\Form\Type\CKEditorType', type_options: { 'config_name' : 'madsfull' } }
+            show:
+              actions: ['edit', '-delete']
+              fields:
+                - 'id'
+                - 'code'
+                - 'subject'
+                - { property: 'template', type: 'raw' }
+                - 'createdAt'

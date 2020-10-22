@@ -1,0 +1,51 @@
+easy_admin:
+    entities:
+        Program:
+            role: ROLE_ADMIN
+            class: MADSPosconsumosBundle\Entity\Program
+            # disabled_actions: ['edit']
+            list:
+                title: 'menu.programs'
+                actions:
+                  - { name: 'show', icon: 'eye' }
+                  - { name: 'edit', icon: 'pencil' }
+                  - { name: 'delete', icon: 'trash' }
+                  - { name: 'new', icon: 'plus-circle' }
+                fields: 
+                  - 'name'
+                  - 'enabled'
+                  - 'addressLine1'
+                  - { property: 'phone', type: 'tel' }
+                  - 'users'
+            form:
+                fields:                    
+                    - { type: 'group', css_class: 'col-md-12', label: 'Program Information' }
+                    - { property: 'name', css_class: 'large' }
+                    - { property: 'phone', css_class: 'large' }
+                    - { property: 'email', type: 'email' }
+                    - { property: 'website', type: 'url', type_options: { attr: {placeholder: 'http://empresa.com'} }, css_class: 'large' }
+                    - { property: 'addressLine1', css_class: 'large' }
+                    - { property: 'addressLine2', label: 'Address detail', help: 'Ejemplo: Centro Comercial Imperial, Local 1001', type_options: {'required': false}, css_class: 'large' }
+                    - { property: 'point', help: 'Verifique la dirección en el mapa <span class="label label-info">También puedes arrastrar el marcador</span>.', type: 'MADSPosconsumosBundle\Form\Type\PointType' }
+                    - { property: 'streetNumber', type: 'hidden' }
+                    - { property: 'route', type: 'hidden' }
+                    - { property: 'locality', type: 'hidden' }
+                    - { property: 'subLocality', type: 'hidden' }
+                    - { property: 'administrativeLevel1', type: 'hidden' }
+                    - { property: 'administrativeLevel2', type: 'hidden' }
+                    - { property: 'administrativeLevel3', type: 'hidden' }
+                    - { property: 'country', type: 'hidden' }
+            show:
+                fields:
+                    - id
+                    - name                    
+                    - { property: 'phone', type: 'tel' }
+                    - { property: 'email', type: 'email' }
+                    - { property: 'website', type: 'url' }
+                    # - wasteTypes
+                    - users
+                    - addressLine1
+                    - addressLine2
+                    - { property: 'point', template: 'point.html.twig' }
+                    - 'enabled'
+                    - createdAt

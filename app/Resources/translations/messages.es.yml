@@ -1,0 +1,170 @@
+# Check out the 'messages_en.yml' for an explanation about the best practices
+# recommended to translate your backend efficiently.
+
+# main menu
+
+menu.campaigns: Campañas
+menu.campaign.list: Listado Campañas
+menu.campaign.add: Nueva Campaña
+menu.collection_points: Puntos de Recolección
+menu.collection_points.list: Listado Puntos
+menu.collection_massive.add: Cargue Masivo
+menu.collection_points.add: Nuevo Punto
+menu.collection_points.import: Importar Puntos
+menu.waste_types: Tipo Residuos
+menu.waste_type.list: Listado Tipos Residuos
+menu.waste_type.add: Nuevo Tipo Residuo
+menu.waste: Residuos
+menu.waste.list: Listado Residuos
+menu.waste.add: Nuevo Residuo
+menu.channels: Canales
+menu.channel.list: Listado Canales
+menu.channel.add: Nuevo Canal
+menu.programs: Programas
+menu.program.list: Listado Programas
+menu.program.add: Nuevo Programa
+menu.users: Contactos
+menu.user.list: Listado Contactos
+menu.user.add: Nuevo Contacto
+menu.user: Mi cuenta
+menu.user.profile: Mi Perfil
+menu.user.logout: Cerrar Sesión
+menu.about: Sobre Posconsumos
+menu.about.home: Sitio web MADS
+menu.about.error: Reportar un error
+menu.about.changelog: Registro de versiones
+menu.reports: Reportes
+menu.reports.list: Listado Reportes
+menu.reports.add: Nuevo Reporte
+import.page_title: Importar %entity_name%
+changelog.page_title: Registro de versiones y/o actualizaciones
+menu.email_template: Plantillas Email
+menu.email_template.list: Listado
+menu.user.password: Restablecer Contraseña
+form.new_password: Nueva contraseña
+form.new_password_confirmation: Repita la contraseña
+resetting.request.submit: Restablecer contraseña
+
+# entity names, labels and titles
+
+
+# entity properties
+Campaign start: Inicio campaña
+Campaign end: Fin campaña
+Publish at: Fecha publicación
+Created at: Fecha creación
+Description: Descripción
+Enabled: Activo(a)
+Features: Funcionalidades
+ID: ID
+Name: Nombre
+Parent: Padre
+Phone: Teléfono
+Location parent: Departamento
+Location: Ciudad / Municipio
+Website: Sitio Web
+Users: Contactos
+Waste: Residuo(s)
+Waste types: Tipos Residuos
+Programs: Programas
+Program: Programa
+User: Contacto
+User.email: Email
+Username: Nombre Contacto
+Password: Contraseña
+Fullname: Nombre Completo
+Position: Cargo / Area
+Channel: Canal
+Schedules: Horarios
+Days: Días
+Opening time: Hora apertura
+Closing time: Hora cierre
+Continuous day: Jornada continua
+Point: Mapa
+Latitude: Latitud
+Longitude: Longitud
+Campaign: Campaña
+CollectionPoint: Punto de Recolección
+Collection Point Information: Información Punto de Recolección
+Image file: Archivo Imagen
+Image: Imagen
+Classname: Nombre clase
+Address line1: Dirección
+Address line2: Dirección 2
+Type of collection points: Tipo de puntos de recolección
+Collection points: Puntos de Recolección
+Code: Código
+Template: Plantilla
+Subject: Asunto
+Last login: Última sesión
+Datetime: Fecha y hora
+Campaigns: Campaña(s)
+If You have created a campaign with previously: Si ud. desea asociar este punto de recolección a una o varias campañas creadas con anterioridad.
+Campaign Information: Información Campaña
+Collection Point Schedules: Horarios Punto de Recolección
+Collection Points Information: Información Puntos de Recolección
+Dates: Fechas
+Collection Point Type: Tipo de Punto de Recolección
+Collection point type: Tipo de punto
+Route Point Datetime: Fecha y hora Punto de Ruta
+Waste Information: Información Residuo
+Waste Type Information: Información Tipo Residuo
+WasteType: Tipo Residuo
+Waste Type: Tipo Residuo
+Sub Waste Type: Subtipo Residuo
+Program Information: Información Programa
+User Information: Información Usuario
+Campaign Type: Tipo Campaña
+Campaign type: Tipo campaña
+Waste Type Parent Information: Información Tipo Residuo Padre
+System Information: Información Sistema
+Address detail: Detalle dirección
+Report: Reporte
+Entity type: Tipo Entidad
+Entity field names: Nombre Columnas Entidad
+Report Information: Información Reporte
+Entity Information: Información Entidad
+Report Filters: Filtros Reporte
+Entity filters: Filtros Entidad
+Entity field name: Nombre Columna Entidad
+Entity field values: Valor(es) Columna Entidad
+Filter type: Tipo Filtro
+Left date: Fecha inicio
+Right date: Fecha fin
+Left datetime: Fecha y hora inicio
+Right datetime: Fecha y hora fin
+Condition pattern: Condición
+Text: Texto
+Left number: Número inicial
+Right number: Número final
+Select: Seleccione
+Value(s): Valor(es)
+Date: Fecha
+Date range: Rango de fecha
+Date and time: Fecha y hora
+Date and time range: Rango de fecha y hora
+Text: Texto
+Boolean: Booleano
+Number: Número
+Numeric range: Rango numérico 
+Association: Relación
+Campaign type choices: Opciones tipo campaña
+Collection point type choices: Opciones tipo puntos recolección
+Excel: Excel
+# id: Id
+# name: Nombre
+# description: Descripción
+# image: Imagen
+# campaignStart: Inicio campaña
+# campaignEnd: Fin campaña
+# publishAt: Fecha publicado
+# campaignType: Tipo campaña
+# enabled: Activo
+# createdAt: Fecha creado
+# collectionPoints.id: Punto recolección Id
+# collectionPoints.name: Punto recolección Nombre
+# collectionPoints.description: Punto recolección Descripción
+# collectionPoints.waste.description: Punto recolección Residuo descripción
+
+
+# help messages

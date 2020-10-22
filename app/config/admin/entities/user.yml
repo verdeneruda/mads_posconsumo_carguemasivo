@@ -1,0 +1,52 @@
+easy_admin:
+    entities:
+        User:
+            role: ROLE_USER
+            class: MADSPosconsumosBundle\Entity\User
+            list:
+                title: 'Usuarios'
+                actions:
+                  - { name: 'show', icon: 'eye' }
+                  - { name: 'edit', icon: 'pencil' }
+                  - { name: 'delete', icon: 'trash' }
+                  - { name: 'new', icon: 'plus-circle' }
+                fields: 
+                  - 'fullname'
+                  - { property: 'enabled', type: 'boolean' }
+                  # - { property: 'phone', type: 'tel' }
+                  - { property: 'email', type: 'email' }
+                  - { property: 'program', type: 'text' }
+                  - 'lastLogin'
+                  - 'createdAt'
+            new:
+                fields:                    
+                    - { type: 'group', css_class: 'col-md-8', label: 'User Information' }
+                    - { property: 'fullname', css_class: 'large' }
+                    - { property: 'phone', css_class: 'large' }
+                    - { property: 'email', type: 'email', css_class: 'large' }
+                    - { property: 'position', css_class: 'large' }
+                    - { type: 'group', css_class: 'col-md-4', label: 'Program Information' }
+                    - { property: 'program', type: 'MADSPosconsumosBundle\Form\Type\ProgramType', type_options: { 'required': true, 'class': 'MADSPosconsumosBundle\Entity\Program', 'attr' : { 'data-widget' : 'select2' } } }
+            edit:
+                fields:                    
+                    - { type: 'group', css_class: 'col-md-8', label: 'User Information' }
+                    - { property: 'fullname', css_class: 'large' }
+                    - { property: 'phone', css_class: 'large' }
+                    # - { property: 'email', type: 'email' }
+                    - { property: 'position', css_class: 'large' }
+                    - { type: 'group', css_class: 'col-md-4', label: 'Program Information' }
+                    - { property: 'program', type: 'MADSPosconsumosBundle\Form\Type\ProgramType', type_options: { 'required': true, 'class': 'MADSPosconsumosBundle\Entity\Program', 'attr' : { 'data-widget' : 'select2' } } }
+            show:
+                fields:
+                    - id
+                    - fullname
+                    - { property: 'phone', type: 'tel' }
+                    - { property: 'email', type: 'email' }
+                    - position
+                    - program
+                    - enabled
+                    - lastLogin
+                    - createdAt
+                    - roles 
+            profile:
+                template: 'easy_admin/User/profile.html.twig'

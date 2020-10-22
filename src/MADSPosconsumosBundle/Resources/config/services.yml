@@ -1,0 +1,147 @@
+services:
+  mads_posconsumos.form.validator.collection_point_validation_group_resolver:
+    class: MADSPosconsumosBundle\Form\Validator\CollectionPointValidationGroupResolver
+
+  mads_posconsumos.mailer.mads_twig_swift:
+    class: MADSPosconsumosBundle\Mailer\MADSTwigSwiftMailer
+    arguments:
+      - "@mailer"
+      - "@router"
+      - "@twig"
+      - { template: { confirmation: %fos_user.registration.confirmation.template%, resetting: %fos_user.resetting.email.template% }, from_email: { confirmation: %fos_user.registration.confirmation.from_email%, resetting: %fos_user.resetting.email.from_email% } }
+  
+  mads_posconsumos.markdown:
+    class: MADSPosconsumosBundle\Utils\Markdown
+  
+  mads_posconsumos.twig.app_extension:
+    class:     MADSPosconsumosBundle\Twig\MarkdownExtension
+    arguments: ['@mads_posconsumos.markdown']
+    public:    false
+    tags:
+        - { name: twig.extension }
+  
+  mads_posconsumos.easyadmin_event_subscriber:
+    class: MADSPosconsumosBundle\EventSubscriber\EasyAdminEventSubscriber
+    arguments:
+      - "@security.acl.provider"
+      - "@security.token_storage"
+      - "@security.authorization_checker"
+      - "@mads_posconsumos.mailer.mads_twig_swift"
+      - "@doctrine.orm.default_entity_manager"
+      - "@service_container"
+    tags:
+      - { name: kernel.event_subscriber }
+
+  mads_posconsumos.form.type.waste_type:
+    class: MADSPosconsumosBundle\Form\Type\WasteType
+    arguments: ['@security.token_storage', '@security.authorization_checker']
+    tags:
+      - { name: form.type }
+
+  mads_posconsumos.form.type.user_type:
+    class: MADSPosconsumosBundle\Form\Type\UserType
+    arguments: ['@security.token_storage', '@security.authorization_checker']
+    tags:
+      - { name: form.type }
+  
+  mads_posconsumos.form.type.program_type:
+    class: MADSPosconsumosBundle\Form\Type\ProgramType
+    arguments: ['@security.token_storage', '@security.authorization_checker']
+    tags:
+      - { name: form.type }
+
+  mads_posconsumos.form.type.collection_point_form_type:
+    class: MADSPosconsumosBundle\Form\Type\CollectionPointFormType
+    arguments: ['@mads_posconsumos.form.validator.collection_point_validation_group_resolver']
+    tags:
+      - { name: form.type }
+
+  mads_posconsumos.form.type.campaign_type:
+    class: MADSPosconsumosBundle\Form\Type\CampaignFormType
+    arguments: ['@security.token_storage', '@security.authorization_checker']
+    tags:
+      - { name: form.type }
+
+  mads_posconsumos.api.campaigns.boolean_filter:
+    parent:    'api_platform.doctrine.orm.boolean_filter'
+    arguments: [ { enabled: ~ , users.program.enabled: ~ } ]
+    tags:
+      - { name: 'api_platform.filter', id: 'campaigns.boolean_filter' }
+
+  mads_posconsumos.api.campaigns.date_filter:
+    parent:    'api_platform.doctrine.orm.date_filter'
+    arguments: [ { publishAt: ~, campaignStart: ~, campaignEnd: ~} ]
+    tags:
+      - { name: 'api_platform.filter', id: 'campaigns.date_filter' }
+
+  mads_posconsumos.api.collection_points.search_filter:
+    parent:    'api_platform.doctrine.orm.search_filter'
+    arguments:
+      0:
+        name: 'partial'
+        addressLine1: 'partial'
+        addressLine2: 'partial'
+        locality: 'partial'
+        subLocality: 'partial'
+        administrativeLevel1: 'partial'
+        administrativeLevel2: 'partial'
+        administrativeLevel3: 'partial'
+        country: 'partial'
+        users.fullname: 'partial'
+        users.program.name: 'partial'
+        waste.name: 'partial'
+        waste.wasteTypes.name: 'partial'
+        waste.wasteTypes.parent.name: 'partial'
+        campaigns.name: 'partial'
+        collectionPointType: 'exact'
+        waste.wasteTypes.parent.id: 'exact'
+    tags:
+      - { name: 'api_platform.filter', id: 'collection_points.search_filter' }
+
+  mads_posconsumos.api.collection_points.boolean_filter:
+    parent:    'api_platform.doctrine.orm.boolean_filter'
+    arguments: [ { enabled: ~ , campaigns.enabled: ~ , users.program.enabled: ~ } ]
+    tags:
+      - { name: 'api_platform.filter', id: 'collection_points.boolean_filter' }
+
+  mads_posconsumos.api.collection_points.date_filter:
+    parent:    'api_platform.doctrine.orm.date_filter'
+    arguments: [ { campaigns.publishAt: ~, campaigns.campaignStart: ~, campaigns.campaignEnd: ~} ]
+    tags:
+      - { name: 'api_platform.filter', id: 'collection_points.date_filter' }
+
+  mads_posconsumos.api.collection_points.geopoint_filter:
+        class: 'MADSPosconsumosBundle\Filter\GeoPointFilter'
+        arguments:
+          - "@doctrine"
+          - "@request_stack"
+          - "@api_platform.iri_converter"
+          - "@api_platform.property_accessor"
+          - "@logger"
+          - { point: ~ }
+        tags:
+          - { name: 'api_platform.filter', id: 'collection_points.geopoint_filter' }
+
+  mads_posconsumos.api.waste_types.boolean_filter:
+    parent:    'api_platform.doctrine.orm.boolean_filter'
+    arguments: [ { enabled: ~ } ]
+    tags:
+      - { name: 'api_platform.filter', id: 'waste_types.boolean_filter' }
+
+  mads_posconsumos.api.waste_types.collection_data_provider:
+    class: MADSPosconsumosBundle\DataProvider\WasteTypesCollectionDataProvider
+    arguments: ["@doctrine.orm.default_entity_manager"]
+    tags:
+      - { name: 'api_platform.collection_data_provider', priority: 2}
+
+  mads_posconsumos.api.programs.boolean_filter:
+    parent:    'api_platform.doctrine.orm.boolean_filter'
+    arguments: [ { enabled: ~ } ]
+    tags:
+      - { name: 'api_platform.filter', id: 'programs.boolean_filter' }
+
+  mads_posconsumos.form.report_form_type:
+    class: MADSPosconsumosBundle\Form\Type\ReportFormType
+    arguments: ["@doctrine.orm.default_entity_manager"]
+    tags:
+      - { name: form.type }

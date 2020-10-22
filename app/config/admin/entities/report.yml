@@ -1,0 +1,26 @@
+easy_admin:
+    entities:
+        Report:
+            role: ROLE_USER
+            class: MADSPosconsumosBundle\Entity\Report
+            list:
+                title: 'menu.reports'
+                actions:
+                  - { name: 'excel', icon: 'file-excel-o', label: 'Excel' }
+                  - { name: 'edit', icon: 'pencil' }
+                  - { name: 'delete', icon: 'trash' }
+                  - { name: 'new', icon: 'plus-circle' }
+                fields:                  
+                  - 'name'                  
+                  - { property: 'entityType', template: 'enum.html.twig' }
+                  - 'program'
+                  - 'createdAt'
+            form:
+              fields:
+                - { type: 'group', css_class: 'col-md-12', label: 'Report Information' }
+                - { property: 'name', css_class: 'large' } 
+                - { type: 'group', css_class: 'col-md-12', label: 'Entity Information' }
+                - { property: 'entityType', type: 'MADSPosconsumosBundle\Form\Type\EntityTypeType', type_options: {'required': true} }                
+                - { type: 'group', css_class: 'col-md-12', label: 'Report Filters', help: '<i class="fa fa-info-circle"></i> Agregue la cantidad de filtros que desee para este reporte. <strong>Importante:</strong> Si cambias el tipo entidad inicial, los filtros se restablecerán y deberás agregarlos nuevamente.'}
+
+                # - { property: 'entityFilters', type: 'collection', type_options: {entry_type: 'MADSPosconsumosBundle\Form\Type\EntityFilterType', 'delete_empty': true, 'allow_add': true, 'allow_delete': true} }
